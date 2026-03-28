@@ -46,19 +46,32 @@ public class ArrayList<E> implements List<E> {
     // Returns the element at (index)
     @Override
     public E get(int index) throws IndexOutOfBoundsException {
-        return null;
+        checkIndex(index, size);
+        return data[index];
     }
 
     // Remove element E from the list. Returns null if it isn't found
     @Override
     public E remove(E element) {
+        for (int i = 0; i < size; i++) {
+            if ((element == null && data[i] == null) ||element != null && element.equals(data[i])) {
+                return remove(i);
+            }
+        }
         return null;
     }
 
     // Removes the element that be found at the position (index)
     @Override
     public E remove(int index) throws IndexOutOfBoundsException {
-        return null;
+        checkIndex(index, size);
+        E temp = data[index];
+        for (int k = index; k < size - 1; k++) { // shift elements to fill hole
+            data[k] = data[k + 1];
+        }
+        data[size - 1] = null; // help garbage collection
+        size--;
+        return temp;
     }
 
     // utility methods
