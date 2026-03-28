@@ -24,10 +24,14 @@ public class ArrayList<E> implements List<E> {
         return size == 0;
     }
 
+    public boolean isFull() {
+        return size == data.length;
+    }
+
     /* Add an element to the end of the list */
     @Override
     public void add(E element) {
-        if (size == data.length) resize(2 * data.length);
+        if (isFull()) resize(2 * data.length);
         data[size++] = element;
     }
 
@@ -35,7 +39,7 @@ public class ArrayList<E> implements List<E> {
     @Override
     public void add(int index, E element) throws IndexOutOfBoundsException {
         checkIndex(index, size + 1);
-        if (size == data.length) resize(2 * data.length);
+        if (isFull()) resize(2 * data.length);
         for (int i = size - 1; i >= index; i--) {
             data[i + 1] = data[i];
         }
@@ -54,7 +58,7 @@ public class ArrayList<E> implements List<E> {
     @Override
     public E remove(E element) {
         for (int i = 0; i < size; i++) {
-            if ((element == null && data[i] == null) ||element != null && element.equals(data[i])) {
+            if ((element == null && data[i] == null) || element != null && element.equals(data[i])) {
                 return remove(i);
             }
         }
@@ -80,8 +84,9 @@ public class ArrayList<E> implements List<E> {
      * Checks whether the given index is in the range [0, n-1].
      */
     protected void checkIndex(int index, int limit) throws IndexOutOfBoundsException {
-        if (index < 0 || index >= limit)
+        if (index < 0 || index >= limit) {
             throw new IndexOutOfBoundsException("Illegal index: " + index);
+        }
     }
 
     /**
@@ -90,8 +95,21 @@ public class ArrayList<E> implements List<E> {
     @SuppressWarnings({"unchecked"})
     protected void resize(int capacity) {
         E[] temp = (E[]) new Object[capacity]; // safe cast; compiler may give warning
-        for (int k = 0; k < size; k++)
+        for (int k = 0; k < size; k++) {
             temp[k] = data[k];
+        }
         data = temp; // start using the new array
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (int i = 0; i < size; i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(data[i]);
+        }
+        sb.append("]");
+        return sb.toString();
     }
 }
