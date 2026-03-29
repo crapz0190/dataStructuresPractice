@@ -1,5 +1,9 @@
 package model.exercise1;
 
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 public class ArrayList<E> implements List<E> {
     public static final int CAPACITY = 16;
     private E[] data;
@@ -58,7 +62,10 @@ public class ArrayList<E> implements List<E> {
     @Override
     public E remove(E element) {
         for (int i = 0; i < size; i++) {
-            if ((element == null && data[i] == null) || element != null && element.equals(data[i])) {
+            /*if ((element == null && data[i] == null) || element != null && element.equals(data[i])) {
+                return remove(i);
+            }*/
+            if (Objects.equals(data[i], element)) {
                 return remove(i);
             }
         }
@@ -103,7 +110,7 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
+        /*StringBuilder sb = new StringBuilder();
         sb.append("[");
         for (int i = 0; i < size; i++) {
             if (i > 0) sb.append(", ");
@@ -111,5 +118,10 @@ public class ArrayList<E> implements List<E> {
         }
         sb.append("]");
         return sb.toString();
+        */
+        return "[" + Arrays.stream(data, 0, size) // Create the stream only of valid elements
+                .map(String::valueOf) // Convert each E element to String
+                .collect(Collectors.joining(", ")) // Join each element with a comma and a space
+                + "]";
     }
 }
