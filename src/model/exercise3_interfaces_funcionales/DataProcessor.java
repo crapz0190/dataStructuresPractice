@@ -2,12 +2,25 @@ package model.exercise3_interfaces_funcionales;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
-public class ProcesadorDeDescuentos {
+public class DataProcessor {
     public static void main(String[] args) {
-        List<Double> precios = Arrays.asList(120.0, 310.0, 1230.0, 190.0, 530.0);
+        // Check if the email is valid
+        Predicate<String> isValidEmail = email -> email.contains("@") && email.endsWith(".com");
 
-        Predicate<Double> esCaro
+        // Extract username from email
+        Function<String, String> extractUsername = email -> email.split("@")[0].toUpperCase();
+
+        String inputEmail = "java_developer@google.com";
+
+        if (isValidEmail.test(inputEmail)) {
+            String username = extractUsername.apply(inputEmail);
+            System.out.println(username);
+        }
     }
+
+
 }
