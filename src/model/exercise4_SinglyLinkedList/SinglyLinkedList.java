@@ -22,6 +22,8 @@
  */
 package model.exercise4_SinglyLinkedList;
 
+import java.util.Objects;
+
 /**
  * A basic singly linked list implementation.
  *
@@ -217,6 +219,65 @@ public class SinglyLinkedList<E> implements Cloneable {
         }
     }
 
+    public int findPosition(E e) {
+        Node<E> walk = head;
+        int position = 0;
+        while (walk != null) {
+            if (Objects.equals(walk.getElement(), e)) {
+                return position;
+            }
+            walk = walk.getNext();
+            position++;
+        }
+        return -1;
+    }
+
+    /* Elimina el elemento e de la lista
+    /* Retorna NULL si no lo encuentra */
+    public E removeElement(E e) {
+        if (isEmpty() || e == null) return null;
+        if (head.getElement().equals(e)) {
+            return removeFirst();
+        }
+        Node<E> walk = head;
+        while (walk.getNext() != null) {
+            if (walk.getNext().getElement().equals(e)) {
+                Node<E> target = walk.getNext();
+                E answer = target.getElement();
+
+                if (target == tail) tail = walk;
+
+                walk.setNext(target.getNext());
+                size--;
+                return answer;
+            }
+            walk = walk.getNext();
+        }
+
+        return null;
+    }
+
+    /* Elimina elemento que se encuentra en la posicion n de la lista */
+    /* Retorna NULL si no es una posicion valida */
+    public E removePos(int n) throws IndexOutOfBoundsException {
+        if (isEmpty() || n < 0 || n >= size) return null;
+        if (n == 0) {
+            return removeFirst();
+        } else {
+            Node<E> walk = head;
+            for (int i = 0; i < n - 1; i++) {
+                walk = walk.getNext();
+            }
+            Node<E> target = walk.getNext();
+            E answer = target.getElement();
+
+            if (target == tail) tail = walk;
+
+            walk.setNext(target.getNext());
+            size--;
+            return answer;
+        }
+    }
 
 
     protected void checkIndex(int index, int limit) throws IndexOutOfBoundsException {
