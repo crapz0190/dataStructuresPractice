@@ -15,6 +15,7 @@ public class Main {
         try {
             Integer num5 = 23;
             int position = 2;
+
             sList.addPos(num5, position);
             System.out.println(sList);
             System.out.println("Size of list: " + sList.size());
