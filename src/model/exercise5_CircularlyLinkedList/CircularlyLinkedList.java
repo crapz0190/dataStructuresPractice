@@ -211,10 +211,36 @@ public class CircularlyLinkedList<E> {
                 walk = walk.getNext();
             }
 
-            Node<E> newest = new Node<>(e,walk.getNext());
+            Node<E> newest = new Node<>(e, walk.getNext());
             walk.setNext(newest);
             size++;
         }
+    }
+
+    /* Elimina el elemento e de la lista
+    /* Retorna NULL si no lo encuentra */
+    public E removeElement(E e) {
+        if (isEmpty() || e == null) return null;
+        Node<E> head = tail.getNext();
+        if (head.getElement().equals(e)) {
+            return removeFirst();
+        }
+
+        Node<E> walk = head;
+        while (walk.getNext() != head) {
+            if (walk.getNext().getElement().equals(e)) {
+                Node<E> target = walk.getNext();
+                E answer = target.getElement();
+
+                if (target == tail) tail = walk;
+
+                walk.setNext(target.getNext());
+                size--;
+                return answer;
+            }
+            walk = walk.getNext();
+        }
+        return null;
     }
 
     protected void checkIndex(int index, int limit) throws IndexOutOfBoundsException {
