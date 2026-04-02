@@ -279,6 +279,29 @@ public class SinglyLinkedList<E> implements Cloneable {
         }
     }
 
+    /* Inserta todos los elementos de la Lista l al final de la lista */
+    public void concatenate(SinglyLinkedList l) {
+        if (l == null || l.isEmpty()) return;
+        Node<E> walk = l.head;
+        while (walk != null) {
+            this.addLast(walk.element);
+            walk = walk.getNext();
+        }
+    }
+
+    /* Busca el elemento e dentro de la lista */
+    /* Retorna el elemnto si lo encuentra o Null si no esta en la lista */
+    public E search(E e) {
+        Node<E> walk = head;
+        while (walk != null) {
+            if (Objects.equals(walk.getElement(), e)) {
+                return walk.getElement();
+            }
+            walk = walk.getNext();
+        }
+        return null;
+    }
+
 
     protected void checkIndex(int index, int limit) throws IndexOutOfBoundsException {
         if (index < 0 || index >= limit) {
