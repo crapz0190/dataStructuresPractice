@@ -243,6 +243,41 @@ public class CircularlyLinkedList<E> {
         return null;
     }
 
+    /* Elimina elemento que se encuentra en la posicion n de la lista */
+    /* Retorna NULL si no es una posicion valida */
+    public E removePos(int n) throws IndexOutOfBoundsException {
+        if (isEmpty()) return null;
+        checkIndex(n, size);
+        if (n == 0) return removeFirst();
+        if (n == size - 1) return removeLast();
+        Node<E> walk = tail.getNext();
+        for (int i = 0; i < n - 1; i++) {
+            walk = walk.getNext();
+        }
+        E answer = walk.getNext().getElement();
+        walk.setNext(walk.getNext().getNext());
+        size--;
+
+        return answer;
+    }
+
+    public E removeLast() {
+        if (isEmpty()) return null;
+        E answer = tail.element;
+        if (size == 1) {
+            tail = null;
+        } else {
+            Node<E> walk = tail.getNext();
+            while (walk.getNext() != tail) {
+                walk = walk.getNext();
+            }
+            walk.setNext(tail.getNext());
+            tail = walk;
+        }
+        size--;
+        return answer;
+    }
+
     protected void checkIndex(int index, int limit) throws IndexOutOfBoundsException {
         if (index < 0 || index >= limit) {
             throw new IndexOutOfBoundsException("Illegal index: " + index);
