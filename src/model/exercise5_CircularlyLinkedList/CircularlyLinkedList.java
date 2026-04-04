@@ -353,8 +353,8 @@ public class CircularlyLinkedList<E> {
         CircularlyLinkedList<?> other = (CircularlyLinkedList<?>) o;
         if (size != other.size) return false;
         if (size == 0) return true;
-        Node walkA = tail.getNext();
-        Node walkB = other.tail.getNext();
+        Node<E> walkA = tail.getNext();
+        Node<?> walkB = other.tail.getNext();
         for (int i = 0; i < size; i++) {
             if (!walkA.getElement().equals(walkB.getElement())) return false;
             walkA = walkA.getNext();
