@@ -343,14 +343,27 @@ public class SinglyLinkedList<E> implements Cloneable {
         }
     }
 
+    /**
+     * Compares this list with the specified object for equality.
+     * * Two lists are considered equal if they have the same size and contain
+     * the same elements in the same order. This implementation uses generic
+     * wildcards to ensure type safety without requiring the same parameterization
+     * for the other list.
+     * * Performance:
+     * - O(1) if sizes are different or if both lists are empty.
+     * - O(n) for the worst-case scenario where n is the number of elements.
+     *
+     * @param o the object to be compared for equality with this list
+     * @return true if the specified object is equal to this list; false otherwise
+     */
     public boolean equals(Object o) {
         if (o == null) return false;
         if (getClass() != o.getClass()) return false;
         SinglyLinkedList<?> other = (SinglyLinkedList<?>) o;   // use nonparameterized type
         if (size != other.size) return false;
         if (size == 0) return true;
-        Node walkA = head;                               // traverse the primary list
-        Node walkB = other.head;                         // traverse the secondary list
+        Node<E> walkA = head;                               // traverse the primary list
+        Node<?> walkB = other.head;                         // traverse the secondary list
         while (walkA != null) {
             if (!walkA.getElement().equals(walkB.getElement())) return false; //mismatch
             walkA = walkA.getNext();
