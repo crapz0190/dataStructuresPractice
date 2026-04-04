@@ -289,16 +289,34 @@ public class SinglyLinkedList<E> implements Cloneable {
         }
     }
 
-    /* Busca el elemento e dentro de la lista */
-    /* Retorna el elemnto si lo encuentra o Null si no esta en la lista */
+    /**
+     * Searches for element e within the list.
+     * * @param e the element to search for
+     *
+     * @return the element if found, or null if it is not in the list
+     */
     public E search(E e) {
-        Node<E> walk = head;
-        while (walk != null) {
-            if (Objects.equals(walk.getElement(), e)) {
-                return walk.getElement();
+        if (isEmpty()) return null;
+        // Case: Single element list
+        if (size == 1) {
+            // If there is only one element, check if head matches the parameter
+            if (head.getElement().equals(e)) return head.getElement();
+        } else {
+            // Case: Two or more elements
+            // Immediate check for head and tail (O(1) optimization)
+            if (head.getElement().equals(e)) return head.getElement();
+            if (tail.getElement().equals(e)) return tail.getElement();
+            Node<E> walk = head;
+            // Since head and tail were already checked, verify remaining nodes in between
+            // The loop stops before reaching the tail
+            while (walk.getNext() != tail) {
+                if (walk.getNext().getElement().equals(e)) {
+                    return walk.getNext().getElement();
+                }
+                walk = walk.getNext();
             }
-            walk = walk.getNext();
         }
+        // If no match is found after checking head, tail, and body
         return null;
     }
 
