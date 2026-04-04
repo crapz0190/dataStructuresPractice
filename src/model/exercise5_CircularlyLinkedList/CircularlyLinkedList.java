@@ -340,6 +340,30 @@ public class CircularlyLinkedList<E> {
     }
 
     /**
+     * Compares this circularly linked list with the specified object for equality.
+     * Two lists are considered equal if they have the same size and contain
+     * the same elements in the same order, starting from the designated head.
+     *
+     * @param o the object to be compared for equality with this list
+     * @return true if the specified object is equal to this list
+     */
+    public boolean equals(Object o) {
+        if (o == null) return false;
+        if (getClass() != o.getClass()) return false;
+        CircularlyLinkedList<?> other = (CircularlyLinkedList<?>) o;
+        if (size != other.size) return false;
+        if (size == 0) return true;
+        Node walkA = tail.getNext();
+        Node walkB = other.tail.getNext();
+        for (int i = 0; i < size; i++) {
+            if (!walkA.getElement().equals(walkB.getElement())) return false;
+            walkA = walkA.getNext();
+            walkB = walkB.getNext();
+        }
+        return true;
+    }
+
+    /**
      * Produces a string representation of the contents of the list.
      * This exists for debugging purposes only.
      */
