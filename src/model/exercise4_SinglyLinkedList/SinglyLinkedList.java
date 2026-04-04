@@ -279,14 +279,30 @@ public class SinglyLinkedList<E> implements Cloneable {
         }
     }
 
-    /* Inserta todos los elementos de la Lista l al final de la lista */
-    public void concatenate(SinglyLinkedList l) {
+    /**
+     * Concatenates all elements from list l to the end of this list.
+     * This operation is performed in O(1) time by linking the tail of the current
+     * list to the head of the provided list.
+     * * After concatenation, the source list (l) is cleared to prevent side effects,
+     * effectively transferring ownership of its nodes to this list.
+     *
+     * @param l the SinglyLinkedList to be appended
+     */
+    public void concatenate(SinglyLinkedList<E> l) {
         if (l == null || l.isEmpty()) return;
-        Node<E> walk = l.head;
-        while (walk != null) {
-            this.addLast(walk.element);
-            walk = walk.getNext();
+        if (isEmpty()) {
+            head = l.head;
+            tail = l.tail;
+        } else {
+            Node<E> otherHead = l.head;
+            tail.setNext(otherHead);
+            tail = l.tail;
         }
+        size += l.size;
+
+        l.head = null;
+        l.tail = null;
+        l.size = 0;
     }
 
     /**
