@@ -22,6 +22,8 @@
  */
 package model.exercise5_CircularlyLinkedList;
 
+import model.exercise4_SinglyLinkedList.SinglyLinkedList;
+
 /**
  * An implementation of a circularly linked list.
  *
@@ -276,6 +278,59 @@ public class CircularlyLinkedList<E> {
         }
         size--;
         return answer;
+    }
+
+    /**
+     * Concatenates all elements from list l to the end of this list.
+     * This operation is performed in O(1) time by relinking the tails of both
+     * circular structures. After the operation, the source list (l) is cleared
+     * to ensure that the nodes are exclusively owned by this list.
+     *
+     * @param l the CircularlyLinkedList to be appended
+     */
+    public void concatenate(CircularlyLinkedList<E> l) {
+        if (l == null || l.isEmpty()) return;
+        if (isEmpty()) {
+            tail = l.tail;
+        } else {
+            Node<E> thisHead = tail.getNext();
+            Node<E> otherHead = l.tail.getNext();
+
+            tail.setNext(otherHead);
+            l.tail.setNext(thisHead);
+            tail = l.tail;
+        }
+        size += l.size;
+
+        l.tail = null;
+        l.size = 0;
+    }
+
+    /**
+     * Searches for element e within the circular list.
+     * It employs an optimization by checking the head and tail (O(1)) before
+     * iterating through the intermediate nodes (the "body") of the list.
+     *
+     * @param e the element to search for
+     * @return the element if found, or null if it does not exist in the list
+     */
+    public E search(E e) {
+        if (isEmpty()) return null;
+        if (size == 1) {
+            if (last().equals(e)) return last();
+        } else {
+            if (last().equals(e)) return last();
+            if (first().equals(e)) return first();
+
+            Node<E> head = tail.getNext();
+            while (head.getNext() != tail) {
+                if (head.getNext().getElement().equals(e)) {
+                    return head.getNext().getElement();
+                }
+                head = head.getNext();
+            }
+        }
+        return null;
     }
 
     protected void checkIndex(int index, int limit) throws IndexOutOfBoundsException {
