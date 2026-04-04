@@ -343,13 +343,12 @@ public class SinglyLinkedList<E> implements Cloneable {
         }
     }
 
-
-    @SuppressWarnings({"unchecked"})
     public boolean equals(Object o) {
         if (o == null) return false;
         if (getClass() != o.getClass()) return false;
-        SinglyLinkedList other = (SinglyLinkedList) o;   // use nonparameterized type
+        SinglyLinkedList<?> other = (SinglyLinkedList<?>) o;   // use nonparameterized type
         if (size != other.size) return false;
+        if (size == 0) return true;
         Node walkA = head;                               // traverse the primary list
         Node walkB = other.head;                         // traverse the secondary list
         while (walkA != null) {
